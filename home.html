@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>PhysicsCloud</title>
+    <link rel="icon" href="https://webstockreview.net/images/idea-clipart-physicist-5.png" type="image/x-icon">
+    <style>
+        body{
+            background-color: rgba(216, 218, 219, 0.849);
+        }
+        #inst{
+            margin-top: 5%;
+            width: 95%;
+        }
+        #btn{
+          margin-top: -2%;
+          font-weight: bold;
+        }
+        @media only screen and (max-width: 550px){
+          #inst{
+            margin-top: 10%;
+            margin-bottom: 4%;
+          }
+        }
+        
+        
+    </style>
+    <script src="dist/start.js"></script>
+    <script src="dist/ques.js"></script>
+  </head>
+  <body onpageshow="time();">
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="dist/pcn.png" alt="" width="80" height="30" class="d-inline-block align-text-top">
+            <strong class="text-secondary"><em>PhysicsCloud</em></strong>
+          </a>
+          <em><div class="d-inline-flex p-2 bd-highlight" id="date"></div></em>
+        </div>
+      </nav>
+
+      <div class="container-fluid" id="inst">
+        <div class="shadow-sm p-3 mb-5 bg-body rounded text-secondary"><p>Where permitted you may use one standard translation dictionary. Dictionaries that have any English-English definitions are not
+            allowed (e.g. The Oxford Advanced Learners’ English-Chinese Dictionary is not allowed; subject specific or specialised 
+            dictionaries are not allowed). Dictionaries are not allowed in CELE English language exams.<p>
+                <p>Where permitted you may use one standard translation dictionary. Dictionaries that have any English-English definitions are not
+                    allowed (e.g. The Oxford Advanced Learners’ English-Chinese Dictionary is not allowed; subject specific or specialised 
+                    dictionaries are not allowed). Dictionaries are not allowed in CELE English language exams.<p>
+            </p></div>
+          <form onsubmit="return nextPage()">
+            <div class="shadow-sm p-3 mb-5 bg-body rounded text-primary">
+              <div class="row">
+                <div class="col">
+                <label for="name" class="form-label">Student's Name</label>
+                <input type="text" class="form-control" placeholder="Enter Your Full Name" id="name" aria-label="name" autocomplete="off" required>
+                </div>
+                <div class="col">
+                <label for="address" class="form-label">Email Address</label>
+                <input type="email" class="form-control" placeholder="Enter Valid e-mail ID" id="address" aria-label="email" autocomplete="off" required>
+                </div>
+              </div>
+            </div>
+            <div class="d-grid gap-2">
+              <button class="btn btn-secondary" id="btn" type="submit">Start Exam</button>
+            </div>
+          </form>
+      </div>
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>

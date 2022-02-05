@@ -1,0 +1,348 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>PhysicsCloud</title>
+    <link rel="icon" href="https://webstockreview.net/images/idea-clipart-physicist-5.png" type="image/x-icon">
+    <style>
+        body{
+            background-color: rgba(202, 199, 204, 0.979);
+        }
+        .container{
+            margin-top: 3%;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            grid-template-rows: 0.1fr 1fr;
+            grid-template-areas: 
+            "head head"
+            "vid lesson";
+        }
+        #lesson{
+            margin-left: 2%;
+            grid-area: lesson;
+        }
+        #head{
+          grid-area: head;
+        }
+        iframe{
+          grid-area: vid;
+        }
+        p:hover{
+          cursor: pointer;
+        }
+        #btngrp{
+              width: fit-content;
+              margin-left: auto;
+              margin-right: auto;
+          }
+        @media only screen and (max-width: 700px){
+          .container{
+            
+            grid-template-columns: 1fr;
+            grid-template-rows: 0.1fr 0.5fr 0.5fr;
+            grid-template-areas: 
+                "head"
+                "vid"
+                "lesson";
+          }
+          #lesson{
+            margin-top: 10px;
+            margin-left: 0;
+            grid-area: lesson;
+          }
+          video{
+            height: 260px;
+            grid-area: vid;
+          }
+          
+          #head{
+            grid-area: head;
+          }
+        }
+    </style>
+    <script src="vidlec.js"></script>
+    <script src="dist/examcell.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-app.js";
+        //import { getAnalytics } from "https://www.gstatic.com/firebasejs/9.5.0/firebase-analytics.js";
+        const firebaseConfig = {
+          apiKey: "AIzaSyAgpiy2aiPRoPWIWw16d2hontpv5mB0VkA",
+          authDomain: "databasejs-169c5.firebaseapp.com",
+          databaseURL: "https://databasejs-169c5-default-rtdb.firebaseio.com",
+          projectId: "databasejs-169c5",
+          storageBucket: "databasejs-169c5.appspot.com",
+          messagingSenderId: "88810494241",
+          appId: "1:88810494241:web:da1120c34a69342fe00660",
+          measurementId: "G-1JBF5XBX1D"
+        };
+      
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const realdb = getDatabase();
+        //const analytics = getAnalytics(app);
+        import {getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-storage.js";
+        import {getDatabase, ref, set, child, get, update, remove} from "https://www.gstatic.com/firebasejs/9.5.0/firebase-database.js";
+
+        var files = [];
+        var files1 = [];
+        var reader = new FileReader();
+        var reader1 = new FileReader();
+
+        var myfile = document.getElementById('vid');
+        var slct = document.getElementById('inpt');
+        var slct1 = document.getElementById('inpt1');
+        var uplod = document.getElementById('upld');
+
+        var input = document.createElement('input');
+        input.type = 'file';
+        input.onchange = e =>{
+            //console.log("alik");
+            files = e.target.files;
+            var extention = GetExtName(files[0]);
+            var name = GetFileName(files[0]);
+
+            document.getElementById('fname').innerHTML = name+extention;
+            document.getElementById('cmnt').innerHTML = " is ready to be uploaded";
+            reader.readAsDataURL(files[0]);
+        }
+
+        var inputt = document.createElement('input');
+        inputt.type = 'file';
+        inputt.onchange = e =>{
+            //console.log("alik");
+            files1 = e.target.files;
+            var extention = GetExtName(files1[0]);
+            var name = GetFileName(files1[0]);
+
+            document.getElementById('fname1').innerHTML = name+extention;
+            document.getElementById('cmnt1').innerHTML = " is ready to be uploaded";
+            reader1.readAsDataURL(files1[0]);
+        }
+
+        reader.onload = function(){
+            myfile.src = reader.result;
+        }
+
+        reader1.onload = function(){
+            myfile.poster = reader1.result;
+        }
+
+        slct.onclick = function(){
+            input.click();
+        }
+
+        slct1.onclick = function(){
+            inputt.click();
+        }
+
+        function GetExtName(file){
+            var temp = file.name.split('.');
+            var ext = temp.slice(temp.length - 1, temp.length);
+            return '.'+ext[0];
+        }
+
+        function GetFileName(file){
+            var temp = file.name.split('.');
+            var fname = temp.slice(0,-1).join('.');
+            return fname;
+        }
+
+        async function uploadprocess(cls,chapn,chapnm,txt,fileupload,fileupload1){
+            //var fileupload = files[0];
+            var filename = document.getElementById('fname').innerText;
+            //console.log(filename);
+
+            const metaData = {
+                contentType: fileupload.type
+            }
+            const mData = {
+                contentType: fileupload1.type
+            }
+            const storage = getStorage();
+            const storageRef = sRef(storage,"Tutorials/"+"class_"+cls+"/"+filename);
+            const UploadTask = uploadBytesResumable(storageRef, fileupload, metaData);
+            document.getElementById('cmnt').innerHTML = "Uploading";
+
+            UploadTask.on('state-changed',(snapshot)=>{
+                var progess = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                document.getElementById('prog').style.width = progess+"%";
+            },
+            (error)=>{
+                document.getElementById('cmnt').innerHTML = "error: file not uploaded";
+            },
+            ()=>{
+                getDownloadURL(UploadTask.snapshot.ref).then((getDownloadURL)=>{
+                    //console.log(getDownloadURL);
+                    document.getElementById('cmnt').innerHTML="Uploaded Successfully";
+                    uploadpic(cls,chapn,chapnm,txt,getDownloadURL,fileupload1);
+
+                });
+            }
+            );
+            
+        }
+        function uploadpic(cls,chapn,chapnm,txt,url,fileupload){
+            var fname = document.getElementById('fname1').innerText;
+            const mData = {
+                contentType: fileupload.type
+            }
+            const storage = getStorage();
+            const storageRef = sRef(storage,"Tutorials/"+"class_"+cls+"/"+fname);
+            const UploadTask = uploadBytesResumable(storageRef, fileupload, mData);
+            document.getElementById('cmnt').innerHTML = "Uploading";
+
+            UploadTask.on('state-changed',(snapshot)=>{
+                var progess = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                document.getElementById('cmnt1').innerHTML = "Uploading "+progess+"%";
+            },
+            (error)=>{
+                document.getElementById('cmnt1').innerHTML = "error: thumbnail not uploaded";
+            },
+            ()=>{
+                getDownloadURL(UploadTask.snapshot.ref).then((getDownloadURL)=>{
+                    //console.log(getDownloadURL);
+                    document.getElementById('cmnt1').innerHTML="Uploaded Successfully";
+                    savetodatabase(cls,chapn,chapnm,txt,url,getDownloadURL);
+
+                });
+            }
+            );
+        }
+
+        function savetodatabase(cls,chapn,chapnm,txt,url,url1){
+            //var txt = document.getElementById('Mname').value;
+            //console.log("Hello",cls,chapn,chapnm,txt,url);
+            set(ref(realdb,"Tutorials/class_"+cls+"/chapter_"+chapn+"/"+chapnm+"/"+Date.now()),{
+                MName: txt,
+                mUrl: url,
+                pUrl: url1
+            });
+            document.getElementById('form1').reset();
+            //location.reload();
+            
+        }
+
+
+        uplod.onclick = function(){
+            var cls;
+            var fileupld = files[0];
+            var fileupld1 = files1[0];
+            var clsix = document.getElementById('nine').checked;
+            var clsx = document.getElementById('ten').checked;
+            var clsxi = document.getElementById('elev').checked;
+            var clsxii = document.getElementById('twlv').checked;
+            var chapn = document.getElementById('cnum').value;
+            var chapnm = document.getElementById('cname').value;
+            var mname = document.getElementById('Mname').value;
+
+            if((clsix==true || clsx==true || clsxi==true || clsxii==true) && (chapn>0) && (chapnm!="") && (mname!="")){
+                if(clsix==true){
+                    cls=9;
+                }
+                else if(clsx==true){
+                    cls=10;
+                }
+                else if(clsxi==true){
+                    cls=11;
+                }
+                else if(clsxii==true){
+                    cls=12;
+                }
+                uploadprocess(cls,chapn,chapnm,mname,fileupld,fileupld1);
+            }
+            else{
+                document.getElementById('cmnt').innerHTML = "Something is going wrong";
+            }
+        }
+
+    </script>
+  </head>
+  <body>
+    <nav class="navbar navbar-light bg-light">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#">
+            <img src="dist/pcn.png" alt="" width="80" height="30" class="d-inline-block align-text-top">
+            <strong class="text-secondary"><em>PhysicsCloud</em></strong>
+          </a>
+          <!--<em><div class="d-inline-flex p-2 bd-highlight" id="date"></div></em>-->
+          <button type="button" class="btn btn-outline-danger btn-sm" onclick="gohome()"><em>log out</em></button>
+        </div>
+    </nav>
+    <div class="container" id="room">
+                <!--<video width="100%" controls>
+                    <source src="https://youtu.be/BRMS3T11Cdw" type="video/mp4">
+                    <source src="https://youtu.be/BRMS3T11Cdw" type="video/ogg">
+                    Your browser does not support HTML video.
+                  </video>-->
+            <div id="head" class="shadow-sm p-3 mb-1 bg-body rounded text-secondary" style="text-align: center;"><strong><em>Welcome to PhysicsCloud uploading dashboard</em></strong></div>
+                <!--<iframe id="vid" class="shadow-sm p-1 mb-1 bg-body rounded" src="" width="100%" height="480" allow="autoplay" allowfullscreen></iframe>-->
+                <video class="shadow-sm p-1 mb-1 bg-body rounded" id="vid" width="100%" height="480" controls controlslist="nodownload">
+                    <source src="" type="video/mp4">
+                    <source src="" type="video/ogg">
+                    Your browser does not support the video tag.
+                </video>
+                <div class="shadow-sm p-1 mb-1 bg-body rounded" id="lesson">
+                    <div class="alert alert-secondary" role="alert" id="alert">
+                        <p class="mb-1"><strong id="fname"></strong><em id="cmnt">No video is selected....</em></p>
+                        <p class="mb-1"><strong id="fname1"></strong><em id="cmnt1">No thumbnail is selected....</em></p>
+                    </div>
+                    <div class="progress mb-3">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" id="prog" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                    </div>
+                    <form id="form1">
+                        <div class="p-1 mb-3">
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="nine" required>
+                                <label class="form-check-label" for="inlineRadio1">Class 9</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="ten">
+                                <label class="form-check-label" for="inlineRadio2">Class 10</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="elev">
+                                <label class="form-check-label" for="inlineRadio3">Class 11</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input" type="radio" name="inlineRadioOptions" id="twlv">
+                                <label class="form-check-label" for="inlineRadio4">Class 12</label>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="number" class="form-control" id="cnum" placeholder="Chapter Number" required>
+                            <label for="cnum">Chapter Number</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="cname" placeholder="Chapter Name" autocomplete="off" required>
+                            <label for="cname">Chapter Name</label>
+                        </div>
+                        <div class="form-floating mb-3">
+                            <input type="text" class="form-control" id="Mname" placeholder="Module Name" autocomplete="off" required>
+                            <label for="Mname">Module Name</label>
+                        </div>
+                        <div id="btngrp">
+                            <div class="btn-group" role="group" aria-label="Basic example">
+                                <button type="button" class="btn btn-secondary" id="inpt">Select VDO</button>
+                                <button type="button" class="btn btn-secondary" id="inpt1">Select Poster</button>
+                                <button type="button" class="btn btn-secondary" id="upld">Upload</button>
+                                <button type="button" class="btn btn-secondary" onclick="resette()">Reset</button>
+                            </div>
+                        </div>
+                    </form>
+                    
+
+                </div>
+            </div>
+        
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -1,0 +1,45 @@
+body, html{
+	margin: 0;
+	padding: 0;
+    border: 0;
+    outline: 0;
+  -ms-overflow-style: none; 
+  scrollbar-width: none;
+    cursor: crosshair;
+}
+
+html::-webkit-scrollbar {
+    display: none;
+}
+
+.S{
+  position: relative;
+  left: 20%;
+  top: 4%;
+  width: 20%;
+}
+
+.C{
+  position: relative;
+  left: 5%;
+  top: 5%;
+  width: 20%;
+
+}
+
+.B{
+  position: relative;
+  left: 30%;
+  top: 3.5%;
+  width: 25%;
+
+}
+
+.offcanvas{
+  cursor: default;
+  width: 20%;
+}
+
+nav{
+  cursor: default;
+}

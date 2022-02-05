@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <title>PhysicsCloud</title>
+    <link rel="icon" href="https://webstockreview.net/images/idea-clipart-physicist-5.png" type="image/x-icon">
+    <style>
+        body{
+            background-color: rgb(201, 203, 206);
+        }
+        #inputarea{
+            margin-top: 5%;
+        }
+        #textarea{
+            margin-top: 30%;
+        }
+        @media only screen and (min-width: 550px){
+            #inputarea{
+                margin-top: 1%;
+            }
+            #textarea{
+                margin-top: 10%;
+            }
+        }
+        
+    </style>
+    <script src="dist/start.js"></script>
+    <script src="dist/examcell.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+    <script id="MainScript">
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+          apiKey: "AIzaSyAgpiy2aiPRoPWIWw16d2hontpv5mB0VkA",
+          authDomain: "databasejs-169c5.firebaseapp.com",
+          databaseURL: "https://databasejs-169c5-default-rtdb.firebaseio.com",
+          projectId: "databasejs-169c5",
+          storageBucket: "databasejs-169c5.appspot.com",
+          messagingSenderId: "88810494241",
+          appId: "1:88810494241:web:da1120c34a69342fe00660",
+          measurementId: "G-1JBF5XBX1D"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+        
+        let db=firebase.firestore();
+      </script>
+  </head>
+  <body onpageshow="time()">
+    <nav class="navbar fixed-top navbar-light bg-light">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0">
+            <img src="dist/pcn.png" alt="" width="80" height="30" class="d-inline-block align-text-top">
+            <strong class="text-secondary"><em>PhysicsCloud</em></strong>
+          </span>
+          <button type="button" class="btn btn-outline-danger btn-sm" onclick="gohome()"><em>log out</em></button>
+          <em><div id="date"></div></em>
+        </div>
+    </nav>
+    <div class="container">
+        <div class="shadow-sm p-3 mb-5 bg-body rounded text-primary" id="textarea">All you have to do is to paste exam link here and press the update button</div>
+        <div class="shadow-lg p-3 mb-5 bg-body rounded" id="inputarea">
+            <div class="container">
+                <label class="text-primary">Paste Exam Link Here</label>
+                <div class="input-group mb-3">
+                    <input type="url" class="form-control" placeholder="Class 9" id="clsnine" aria-label="Recipient's username" aria-describedby="button-addon1">
+                    <button class="btn btn-secondary" type="button" id="button-addon1" onclick="putDatanine()"><em>Update</em></button>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="url" class="form-control" placeholder="Class 10" id="clsten" aria-label="Recipient's username" aria-describedby="button-addon2">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon2" onclick="putDataten()"><em>Update</em></button>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="url" class="form-control" placeholder="class 11" id="clselev" aria-label="Recipient's username" aria-describedby="button-addon3">
+                    <button class="btn btn-secondary" type="button" id="button-addon3" onclick="putDataeleven()"><em>Update</em></button>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="url" class="form-control" placeholder="Class 12" id="clstwlve" aria-label="Recipient's username" aria-describedby="button-addon4">
+                    <button class="btn btn-outline-secondary" type="button" id="button-addon4" onclick="putDatatwelve()"><em>Update</em></button>
+                </div>
+                <div class="input-group mb-3">
+                    <input type="url" class="form-control" placeholder="Competetive examination" id="clscomp" aria-label="Recipient's username" aria-describedby="button-addon5">
+                    <button class="btn btn-secondary" type="button" id="button-addon5" onclick="putDatacomp()"><em>Update</em></button>
+                </div>
+            </div>
+        </div>
+    </div>
+      
+
+    <!-- Optional JavaScript; choose one of the two! -->
+
+    <!-- Option 1: Bootstrap Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+    <!-- Option 2: Separate Popper and Bootstrap JS -->
+    <!--
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    -->
+  </body>
+</html>
