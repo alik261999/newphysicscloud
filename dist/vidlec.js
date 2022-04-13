@@ -51,6 +51,9 @@ function retrieveData(){
     });
 }
 
-                    
-                          
-                        
+function resize(){
+    if(screen.width <= 990)
+    document.getElementById('accordionExample').style.height = "fit-content";
+    else
+        document.getElementById('accordionExample').style.height = `${document.getElementById('vid').offsetHeight-8}px`;
+}

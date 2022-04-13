@@ -20,44 +20,73 @@
             margin-right: auto;
             padding: 2%;
         }
-        #link1,#link2,#link3,#link4,#link5,#link6,#link7{
-          width: 90%;
-          transition: 0.3s;
+        #welcome{
+          display: flex;
+          border-radius: 5px;
         }
-        #link1:hover{
-          transform: scale(1.1);
+        #img{
+          margin-right: 0px;
+          margin-left: auto;
+          margin-top: 1%;
+          margin-bottom: 1%;
+          border-radius: 5px;
         }
-        #link2:hover{
-          transform: scale(1.1);
+        #grid{
+          display: grid;
+          margin-top: 2%;
+          grid-template-columns: 0.9fr 1.5fr 1fr;
+          grid-template-rows: 0.6fr 0.2fr 1fr;
+          grid-template-areas: "bio sp1 nt"
+                                "tm sp1 nt"
+                                "tm sp2 nt";
+          grid-gap: 2%;
         }
-        #link3:hover{
-          transform: scale(1.1);
+        #sp1{
+          grid-area: sp1;
+          border-radius: 5px;
         }
-        #link4:hover{
-          transform: scale(1.1);
+        #sp2{
+          grid-area: sp2;
+          border-radius: 5px;
+          padding: 2%;
         }
-        #link5:hover{
-          transform: scale(1.1);
+        #cand{
+          padding: 5%;
+          border-radius: 5px;
+          /*width: 90%;*/
+          grid-area: bio;
         }
-        #link6:hover{
-          transform: scale(1.1);
+        #wel{
+          margin: 3%;
+          font-size: 20px;
         }
-        #link7:hover{
-          transform: scale(1.1);
+        #wel2{
+          margin-top: -10%;
         }
-        .card{
-            margin: 2%;
-            margin-left: auto;
-            margin-right: auto;
+        #meet{
+          padding: 8%;
+          border-radius: 5px;
+          grid-area: tm;
+        }
+        #meet a{
+          text-decoration: none;
+        }
+        #time{
+          border-radius: 2px;
+          border-color: rgba(142, 143, 144, 0.847);
+          border-width: 2px;
+          border-style: dashed;
+        }
+        #notes{
+          padding: 2%;
+          border-radius: 5px;
+          grid-area: nt;
         }
         @media only screen and (max-width: 550px){
           #container{
             margin-top: 12%;
           }
-
-          .card{
-            width: 100%;
-          }
+          
         }
     </style>
     <script src="dist/start.js"></script>
@@ -85,12 +114,33 @@
         
         let db=firebase.firestore();
       </script>
+      <script>
+        function greet(){
+          var now = new Date();
+          var hr = now.getHours();
+          //console.log(hour);
+          //hr=parseInt(hr);
+          var greet="Good Night";
+          if(hr>0 && hr<=10){
+            greet = "Good Morning";
+          }else if(hr>10 && hr<=16){
+            greet = "Good Afternoon";
+          }else if(hr>16 && hr<=20){
+            greet = "Good Evening";
+          }else if(hr>20 && hr<=23){
+            greet = "Good Night";
+          }
+          document.getElementById('greet').innerHTML = greet;
+        }
+      </script>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.1/dist/chart.min.js"></script>
+      <script src="dist/chart.js"></script>
   </head>
-  <body onpageshow="time();firee();">
+  <body onpageshow="firee();greet();show();"> <!--time();-->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-fluid">
           <a class="navbar-brand">
-            <img src="dist/pcn.png" alt="" width="80" height="30" class="d-inline-block align-text-top">
+            <img src="dist/pclogo.png" alt="" width="30" class="d-inline-block align-text-top">
             <strong class="text-secondary"><em>PhysicsCloud</em></strong>
           </a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -103,68 +153,59 @@
                   Exam
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                  <li><a class="dropdown-item" id="ninee" href="#">Class 9</a></li>
-                  <li><a class="dropdown-item" id="tent" href="#">Class 10</a></li>
-                  <li><a class="dropdown-item" id="elev" href="#">Class 11</a></li>
-                  <li><a class="dropdown-item" id="twel" href="#">Class 12</a></li>
-                  <li><a class="dropdown-item" id="comp" href="#">Competetive</a></li>
+                  <li><a class="dropdown-item" id="ninee" href="#" onclick="addClass('9')">Class 9</a></li>
+                  <li><a class="dropdown-item" id="tent" href="#" onclick="addClass('10')">Class 10</a></li>
+                  <li><a class="dropdown-item" id="elev" href="#" onclick="addClass('11')">Class 11</a></li>
+                  <li><a class="dropdown-item" id="twel" href="#" onclick="addClass('12')">Class 12</a></li>
+                  <li><a class="dropdown-item" id="comp" href="#" onclick="addClass('comp')">Competetive</a></li>
                 </ul>
               </li>
             </ul>
             <button type="button" class="btn btn-outline-danger btn-sm" onclick="gohome()"><em>log out</em></button>
-            <em><div class="d-inline-flex p-2 bd-highlight" id="date"></div></em>
+            <!--<em><div class="d-inline-flex p-2 bd-highlight" id="date"></div></em>-->
           </div>
         </div>
       </nav><br></br>
-      <div class="container-fluid row" id="container">
-        <div class="card text-white bg-secondary mb-3" id="link1">
-            <div class="card-header">JEE Main & WBJEE</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+      <div class="container" id="container">
+          <div id="welcome" class="shadow bg-body">
+            <div id="wel" class="text-secondary">
+              <div id="wel1"><span id="greet">Good Morning</span>, <strong><em>Alik</em></strong></div><br>
+              <div id="wel2">Welcome to <span><em>PhysicsCloud</em></span></div>
             </div>
+            <img src="dist/pic1.png" id="img" height="120">
           </div>
-          <div class="card text-dark bg-light mb-3" id="link2">
-            <div class="card-header">NEET</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+          <div id="grid">
+            <div id="cand" class="bg-body shadow text-secondary">
+              <div id="cand1"><strong>Name:</strong> Alik Dey</div>
+              <div id="cand2"><strong>Class:</strong> WBJEE</div>
+              <div id="cand3"><strong>Mode:</strong> Online</div>
+              <div id="cand4"><strong>Batch:</strong> Online</div>
+              <div id="cand5"><strong>Reg. e-mail:</strong> alikdey261999@gmail.com</div>
+              <div id="cand6"><strong>Session validity:</strong> AUG-2022</div>
             </div>
-          </div>
-          <div class="card text-white bg-secondary mb-3" id="link3">
-            <div class="card-header">Class 12</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div id="meet" class="bg-body shadow text-secondary">
+              <div class="time">
+                <div><strong>Monday</strong>&emsp;<span>7:00PM</span></div>
+                <div><a href="#">Join Now</a></div>
+              </div>
+              <div class="time">
+                <div><strong>Wednessday</strong>&emsp;<span>5:00PM</span></div>
+                <div><a href="#">Join Now</a></div>
+              </div>
             </div>
-          </div>
-          <div class="card text-dark bg-light mb-3" id="link4">
-            <div class="card-header">Class 11</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div id="notes" class="bg-body shadow text-secondary">
+              <h4 style="text-align: center;">Link & Notes</h4>
+              <ol id="nt">
+                <li>Chapter-V => Kinematics <a href="#">part-i</a></li>
+                <li><a href="#">Kinematics part-i</a></li>
+                <li><a href="#">Kinematics part-i</a></li>
+              </ol>
             </div>
-          </div>
-          <div class="card text-light bg-secondary mb-3" id="link5">
-            <div class="card-header">Class 10</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div id="sp1" class="bg-body shadow text-secondary">
+              <canvas id="myChart1" height="120"></canvas>
             </div>
-          </div>
-          <div class="card text-dark bg-light mb-3" id="link6">
-            <div class="card-header">Class 9</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-              <a href="https://vssut.ac.in/lecture_notes/lecture1424354156.pdf" class="text-dark">C Programming</a>
-            </div>
-          </div>
-          <div class="card text-light bg-secondary mb-3" id="link7">
-            <div class="card-header">Class 8</div>
-            <div class="card-body">
-              <h5 class="card-title">Notes & Links</h5>
-              <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <div id="sp2" class="bg-body shadow text-secondary">
+              
             </div>
           </div>
       </div>

@@ -15,6 +15,9 @@
         body{
             background-color: rgb(159, 161, 163);
         }
+        input{
+          font-family: 'Times New Roman', Times, serif;
+        }
         #form1{
             width: 95%;
             margin-top: 5%;
@@ -58,6 +61,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
     <script id="MainScript">
         // Your web app's Firebase configuration
@@ -77,16 +81,17 @@
         firebase.analytics();
         
         let db=firebase.firestore();
+        let dtb=firebase.database();
       </script>
   </head>
-  <body onpageshow="time()">
+  <body onpageshow="time();Classes()" onpagehide="clr()">
     <nav class="navbar fixed-top navbar-light bg-light">
         <div class="container-fluid">
           <span class="navbar-brand mb-0">
-            <img src="dist/pcn.png" alt="" width="80" height="30" class="d-inline-block align-text-top">
+            <img src="dist/pclogo.png" alt="" width="30" class="d-inline-block align-text-top">
             <strong class="text-secondary"><em>PhysicsCloud</em></strong>
           </span>
-          <a class="btn btn-outline-secondary" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">Packages</a>
+          <em><div id="date"></div></em>
         </div>
       </nav>
       <form onsubmit="return record()" id="rec">
@@ -157,38 +162,32 @@
                 <h5 class="card-title">Classroom</h5>
                 <p class="card-text">Choose your classroom</p>
                 <div class="container-fluid">
-                  <table cellpadding="8">
-                    <tr>
-                      <td><input class="form-check-input" type="radio" id="on" name="class" required>&nbsp;<label for="male">Online&nbsp;</label>&nbsp;
-                        <input class="form-check-input" type="radio" id="off" name="class">&nbsp;<label for="female">Offline</label>
-                      </td>
-                    </tr>
+                  <table cellpadding="8" id="clsrminp">
                       <tr>
-                        <td><select id="menu">
-                          <option value="">Select Batch</option>
-                          <option value="Shyamnagar">Shyamnagar</option>
-                          <option value="Barrackpore">Barrackpore</option>
-                          <option value="Khardah">Khardah</option>
-                          <option value="Dumdum">Dumdum</option>
-                          <option value="Chandannagar">Chandannagar</option>
-                          <option value="Uttarpara">Uttarpara</option>
-                        </select></td>
-                      </tr>
-                      <tr>
-                        <td><select id="classes" required>
+                        <td><select id="classes" onchange="clr()" required>
                           <option value="">Select Class</option>
-                          <option value="8">Class 8</option>
+                          <!--<option value="8">Class 8</option>
                           <option value="9">Class 9</option>
                           <option value="10">Class 10</option>
                           <option value="11">Class 11</option>
                           <option value="12">Class 12</option>
                           <option value="neet">NEET</option>
                           <option value="jeemain">JEE Main</option>
-                          <option value="wbjee">WBJEE</option>
+                          <option value="wbjee">WBJEE</option>-->
                         </select></td>
                       </tr>
                       <tr>
-                        <td><input type="text" id="dob" placeholder="Enter your DOB as password" onpointerleave="(this.type='text')" onpointerenter="(this.type='date')" required></td>
+                        <td><input class="form-check-input" type="radio" id="on" name="class" onclick="delBatch()" required>&nbsp;<label for="male">Online&nbsp;</label>&nbsp;
+                          <input class="form-check-input" type="radio" id="off" name="class" onclick="addBatch()" required>&nbsp;<label for="female">Offline</label>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><select id="menu">
+                          <option value="">Select Batch</option>
+                        </select></td>
+                      </tr>
+                      <tr>
+                        <td><input type="text" id="dob" placeholder="Enter your DOB as password" max="2021-12-31" onblur="(this.type='text')" onfocus="(this.type='date')" required></td>
                       </tr>
                   </table>
                 </div>
@@ -200,90 +199,6 @@
           <button class="btn btn-success" type="submit" style="font-weight: bold;">Save & Submit</button>
         </div>
       </form>
-      
-      <div class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-        <div class="offcanvas-header">
-          <h5 class="offcanvas-title" id="offcanvasExampleLabel">Location & Batch</h5>
-          <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-        </div>
-        <div class="offcanvas-body">
-          <em><div class="d-inline-flex p-2 bd-highlight" id="date"></div></em>
-          <div class="accordion" id="accordionExample">
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingOne">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                  Barrackpore
-                </button>
-              </h2>
-              <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong><p>JEE Main</p><p>WBJEE</p><p>NEET</p><p>Class 9</p><p>Class 10</p><p>Class 11</p><p>Class 12</p></strong>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingTwo">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                  Shyamnagar
-                </button>
-              </h2>
-              <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong><p>WBJEE</p><p>Class 8</p><p>Class 9</p><p>Class 10</p></strong>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingThree">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                  Khardah
-                </button>
-              </h2>
-              <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong><p>NEET</p><p>WBJEE</p><p>Class 8</p><p>Class 9</p></strong>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingFour">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                  Dumdum
-                </button>
-              </h2>
-              <div id="collapseFour" class="accordion-collapse collapse" aria-labelledby="headingFour" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong><p>JEE Main</p><p>Class 12</p><p>Class 11</p><p>Class 10</p></strong>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingFive">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFive" aria-expanded="false" aria-controls="collapseFive">
-                  Chandannagar
-                </button>
-              </h2>
-              <div id="collapseFive" class="accordion-collapse collapse" aria-labelledby="headingFive" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong><p>JEE Main</p><p>Class 9</p><p>Class 8</p></strong>
-                </div>
-              </div>
-            </div>
-            <div class="accordion-item">
-              <h2 class="accordion-header" id="headingSix">
-                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
-                  Uttarpara
-                </button>
-              </h2>
-              <div id="collapseSix" class="accordion-collapse collapse" aria-labelledby="headingSix" data-bs-parent="#accordionExample">
-                <div class="accordion-body">
-                  <strong><p>NEET</p><p>WBJEE</p><p>Class 12</p><p>Class 11</p><p>Class 10</p></strong>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
     <!-- Optional JavaScript; choose one of the two! -->
 

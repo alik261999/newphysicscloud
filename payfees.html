@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <title>PhysicsCloud</title>
+    <link rel="icon" href="https://webstockreview.net/images/idea-clipart-physicist-5.png" type="image/x-icon">
+    <style>
+        body{
+            background-color: rgb(202, 199, 204, 0.979);
+            color: rgba(105, 107, 109, 0.884);
+        }
+        input{
+            font-family: 'Times New Roman', Times, serif;
+        }
+        .shadow{
+            margin-top: 10%;
+            width: 60%;
+            margin-left: auto;
+            margin-right: auto;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+        .cont{
+            display: grid;
+            grid-template-rows: "1fr 1fr";
+            grid-template-columns: "0.4fr 0.4fr";
+            grid-template-areas: "in1 in2 in3"
+                                "in4 in5 in6"
+                                "in7 in8 in10"
+                                "in9 in9 but";
+        }
+        #in1{
+            grid-area: in1;
+        }
+        #in2{
+            grid-area: in2;
+        }
+        #in3{
+            grid-area: in3;
+        }
+        #in4{
+            grid-area: in4;
+        }
+        #in5{
+            grid-area: in5;
+        }
+        #in6{
+            grid-area: in6;
+        }
+        #in7{
+            grid-area: in7;
+        }
+        #in8{
+            grid-area: in8;
+        }
+        #in10{
+            grid-area: in10;
+        }
+        #in9{
+            grid-area: in9;
+            width: 98%;
+        }
+        #sub{
+            grid-area: but;
+        }
+        @media screen and (max-width:1000px){
+            .shadow{
+                margin-top: 20%;
+                width: 95%;
+                margin-left: auto;
+                margin-right: auto;
+                font-family: 'Times New Roman', Times, serif;
+            }
+            .cont{
+                display: grid;
+                grid-template-rows: "1fr";
+                grid-template-columns: "2fr";
+                grid-template-areas: "in1" "in2"
+                                    "in3" "in4"
+                                    "in5" "in6"
+                                    "in7" "in8" "in10"
+                                    "in9" "but";
+            }
+            #sub{
+            grid-area: but;
+        }
+            #in1{
+                grid-area: in1;
+            }
+            #in2{
+                grid-area: in2;
+            }
+            #in3{
+                grid-area: in3;
+            }
+            #in4{
+                grid-area: in4;
+            }
+            #in5{
+                grid-area: in5;
+            }
+            #in6{
+                grid-area: in6;
+            }
+            #in7{
+                grid-area: in7;
+            }
+            #in8{
+                grid-area: in8;
+            }
+            #in9{
+                grid-area: in9;
+                margin-bottom: 4%;
+            }
+            #in10{
+                grid-area: in10;
+            }
+        }
+    </style>
+    <script src="dist/fees.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-auth.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.7.1/firebase-analytics.js"></script>
+    <script id="MainScript">
+        var firebaseConfig = {
+          apiKey: "AIzaSyAgpiy2aiPRoPWIWw16d2hontpv5mB0VkA",
+          authDomain: "databasejs-169c5.firebaseapp.com",
+          databaseURL: "https://databasejs-169c5-default-rtdb.firebaseio.com",
+          projectId: "databasejs-169c5",
+          storageBucket: "databasejs-169c5.appspot.com",
+          messagingSenderId: "88810494241",
+          appId: "1:88810494241:web:da1120c34a69342fe00660",
+          measurementId: "G-1JBF5XBX1D"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        //firebase.analytics();
+        
+        let db=firebase.database();
+        let dbf = firebase.firestore();
+        let strg = firebase.storage();
+    </script>
+    <script>
+        function fun(){
+            document.getElementById('fi6').setAttribute('max', getTodaysDate());
+        }
+        function getTodaysDate(){
+            date = new Date();
+            day = date.getDate();
+            month = date.getMonth() + 1;
+            year = date.getFullYear();
+
+            if (month < 10) month = "0" + month;
+            if (day < 10) day = "0" + day;
+
+            today = year + "-" + month + "-" + day; 
+
+            return today;
+        }
+    </script>
+  </head>
+  <body onpageshow="fun()">
+    <nav class="navbar fixed-top navbar-light bg-light">
+        <div class="container-fluid">
+          <span class="navbar-brand mb-0">
+            <img src="dist/pclogo.png" alt="" width="30" class="d-inline-block align-text-top">
+            <strong class="text-secondary"><em>PhysicsCloud</em></strong>
+          </span>
+        </div>
+    </nav>
+    <div class="shadow p-3 mb-5 bg-body rounded">
+        <center>
+            <h3 class="text-secondary"><strong>PAYMENT DESK</strong></h3>
+            <p>We accept payments through Debit card and online pay like &nbsp;<span><img src="https://uxwing.com/wp-content/themes/uxwing/download/10-brands-and-social-media/google-pay.png" height="22">&nbsp;G Pay&nbsp;<img src="https://cricketbettingguru.com/wp-content/uploads/2021/06/phonepe-deposit-header.png" height="80">&nbsp;<img src="https://cdn2.iconfinder.com/data/icons/social-icons-color/512/paytm-512.png" height="50">&nbsp;<img src="https://www.drupal.org/files/project-images/logo_amazonpay-primary-fullcolor-positive.png" height="20">&nbsp;</span></p>
+            <div class="cont">
+                <div class="form-floating mb-3 me-2" id="in1">
+                    <input type="text" class="form-control" id="fi1" placeholder="Student's Name">
+                    <label for="floatingInput">Student's Name</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in2">
+                    <input type="text" class="form-control" id="fi2" placeholder="Enrollment ID">
+                    <label for="floatingInput">Enrollment ID</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in3">
+                    <input type="text" class="form-control" id="fi3" placeholder="A/C holder's name">
+                    <label for="floatingInput">A/C holder's name</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in4">
+                    <input type="text" class="form-control" id="fi4" pattern="[0-9]" placeholder="Account Number">
+                    <label for="floatingInput">Account Number</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in5">
+                    <input type="text" class="form-control" id="fi5" placeholder="IFSC Code">
+                    <label for="floatingInput">IFSC Code</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in6">
+                    <input type="date" class="form-control" id="fi6" placeholder="Payment date">
+                    <label for="floatingInput">Payment date</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in7">
+                    <input type="email" class="form-control" id="fi7" placeholder="Email address">
+                    <label for="floatingInput">Email address</label>
+                </div>
+                <div class="form-floating mb-3 me-2" id="in8">
+                    <input type="text" class="form-control" id="fi8" placeholder="Transaction ID">
+                    <label for="floatingInput">Transaction ID</label>
+                </div>
+                <div class="form-floating" style="font-family: 'Times New Roman', Times, serif;">
+                    <select class="form-select mb-3 me-2" id="in10" aria-label="Default select example">
+                        <option selected disabled>Fees Type</option>
+                        <option value="Admission">Admission</option>
+                        <option value="Installment">Installment</option>
+                        <option value="Distance">Distance</option>
+                      </select>
+                      <label for="in10">Select Fee Type</label>
+                </div>
+                <input class="form-control form-control me-2" id="in9" type="file" accept="image/png, image/jpeg">
+                <button type="button" class="btn btn-outline-secondary me-2" id="sub" onclick="addDocument()">Save & Submit</button>
+            </div>
+            <div id="result"></div>
+        </center>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+  </body>
+</html>

@@ -104,3 +104,15 @@ function putDatacomp(){
         alert("Something went wrong");
     });
 }
+
+function deleteDoc(id){
+    if(confirm("Are you sure to delete the selected document???")){
+        db.collection("Student").doc(id).delete().then(() => {
+            alert("Document successfully deleted!");
+            document.getElementById(id).disabled = true;
+         }).catch((error) => {
+             alert("Error removing document: ", error);
+         });
+    }
+    
+}

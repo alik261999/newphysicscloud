@@ -1,0 +1,334 @@
+body{
+    background-color: rgba(202, 199, 204, 0.979);
+}
+::-webkit-scrollbar{
+  width: 5px;
+}
+::-webkit-scrollbar-track{
+  box-shadow: inset 0 0 5px grey;
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb{
+  background: rgb(106, 105, 105);
+  border-radius: 10px;
+}
+#prev{
+  background-color: rgba(202, 199, 204, 0.979);
+  border: none;
+  margin-right: 2%;
+  margin-left: -3%;
+}
+#next{
+  background-color: rgba(202, 199, 204, 0.979);
+  border: none;
+  margin-right: -3%;
+  margin-left: auto;
+}
+input{
+  font-family: 'Times New Roman', Times, serif;
+}
+#notice p{
+  font-size: 20px;
+}
+.img{
+  height: 90vh;
+}
+#even{
+  display: flex;
+}
+a{
+  color: white;
+  text-decoration: none;
+}
+.msg01{
+  /*background-color: rgba(158, 155, 155, 0.834);*/
+  border-radius: 10px;
+  height: 50vh;
+  padding: 2% 3%;
+  margin: 2%;
+  width: 50%;
+}
+#note{
+  height: 38vh;
+  overflow-y: auto;
+}
+#msg1{
+    width: 98%;
+    margin-top: 1%;
+    margin-left: auto;
+    margin-right: auto;
+}
+#msg2,#msg3,#msg01,#msg4{
+  display: flex;
+}
+.card{
+    width: 50%;
+    margin: 1%;
+}
+.btn{
+    border-radius: 20px;
+}
+#svg1{
+    margin-top: -10%;
+}
+.msg2{
+  background-color: rgba(158, 155, 155, 0.834);
+  padding: 2% 6%;
+  border-radius: 10px;
+  margin: 1% 2%;
+  width: 25%;
+}
+.msg3{
+  padding: 2% 6%;
+  margin: 1% 2%;
+  width: 29%;
+}
+#imgo{
+  background-color: white;
+  width: fit-content;
+  padding: 1%;
+  border-radius: 100%;
+  margin-right: 5%;
+}
+#cand{
+  border-radius: 100%;
+  height: 150px;
+  width: 150px;
+}
+#ev01{
+  margin-top: 8%;
+}
+#ev3{
+  margin-top: 2%;
+}
+footer{
+background-color: #9E9E9E;
+  padding: 1.5%;
+margin-top: -2px;
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 1fr;
+  grid-template-rows: 1fr 0.2fr;
+  grid-template-areas: "ft1 ft2 rate form"
+                        "res res res form";
+}
+#rate{
+  grid-area: rate;
+}
+#res{
+  grid-area: res;
+  text-align: center;
+}
+#ft1{
+  padding: 20% 10% 0 5%;
+  text-align: right;
+  grid-area: ft1;
+}
+#f2{
+  margin-top: 50%;
+  grid-area: ft2;
+}
+#form{
+  grid-area: form;
+  width: fit-content;
+}
+/*table{
+  width: 90%;
+  text-align: center;
+}*/
+.star-widget{
+  justify-content: center;
+}
+.star-widget input{
+    display: none;
+  }
+  .star-widget label{
+      font-size: 200%;
+      color: #444;
+      /*padding: 1px 6px 8px;*/
+      padding: 0.0625rem 0.375rem 0.5rem;
+      float: right;
+      transition: all 0.2s ease;
+    }
+    input:not(:checked) ~ label:hover,
+    input:not(:checked) ~ label:hover ~ label{
+      color: rgb(255, 255, 255);
+    }
+    input:checked ~ label{
+      color: rgb(255, 255, 255);
+    }
+    input#rate-5:checked ~ label{
+      color: rgb(255, 255, 255);
+      text-shadow: 0 0 20px rgb(235, 176, 131);
+    }
+    #rate-1:checked ~ form1 header:before{
+      content: "Poor service";
+    }
+    #rate-2:checked ~ form1 header:before{
+      content: "I'm not satisfied";
+    }
+    #rate-3:checked ~ form1 header:before{
+      content: "Overall good";
+    }
+    #rate-4:checked ~ form1 header:before{
+      content: "Nice service";
+    }
+    #rate-5:checked ~ form1 header:before{
+      content: "Truely nice service";
+    }
+    header{
+      width: 100%;
+      font-family: 'Times New Roman', Times, serif;
+      font-size: 25px;
+      color: white;
+      font-style: italic;
+      margin: 5px 0 10px 0;
+      text-align: center;
+      transition: all 0.2s ease;
+    }
+    @media screen and (max-width: 600px){
+      footer{
+        grid-template-columns: 1fr;
+        grid-template-rows: 0.5fr 0.8fr 1fr 1fr 0.2fr;
+        grid-template-areas: "ft1" "ft2" "rate" "form"
+                              "res";
+      }
+      
+      .img{
+            height: 50vh;
+          }
+      #rate{
+        grid-area: rate;
+        margin-left: 5%;
+      }
+      #res{
+        grid-area: res;
+      }
+      #ft1{
+    
+        padding: 0%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-top: 10%;
+        grid-area: ft1;
+      
+      }
+      #ft2{
+        
+        margin-left: auto;
+        margin-right: auto;
+        grid-area: ft2;
+        text-align: center;
+      }
+      #form{
+        grid-area: form;
+        width: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .card-text{
+        text-align: justify;
+        -moz-text-align-last: left;
+        text-align-last: left;
+      }
+      #msg01{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 1fr;
+        grid-template-areas: "event"
+                              "stud";
+      }
+      #event{
+        grid-area: stud;
+        width: 95%;
+        margin-top: 2%;
+        height: fit-content;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #notice{
+        grid-area: event;
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        
+      }
+      #msg2{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: .5fr .5fr .5fr .5fr;
+        grid-template-areas: "msg1" "msg2" "msg3" "msg4";
+      }
+      #msg21{
+        grid-area: msg1;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #msg22{
+        grid-area: msg2;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #msg23{
+        grid-area: msg3;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #msg24{
+        grid-area: msg4;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #notice p{
+        font-size: 15px;
+      }
+      #msg3{
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: .5fr .5fr .5fr .5fr;
+        grid-template-areas: "ms1" "ms2" "ms3" "ms4";
+      }
+      #msg31{
+        grid-area: ms1;
+        width: 90%;
+        margin-top: 2%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #msg32{
+        grid-area: ms2;
+        width: 90%;
+        margin-top: -10%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      #msg33{
+        grid-area: ms3;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: -50%;
+      }
+      .card{
+        width: 95%;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 2%;
+      }
+      #imgo{
+        background-color: white;
+        width: fit-content;
+        height: fit-content;
+        padding: 1%;
+        /*border-radius: 100%;*/
+        margin-right: 5%;
+      }
+      #cand{
+        /*border-radius: 100%;*/
+        height: 100px;
+        width: 100px;
+      }
+    }

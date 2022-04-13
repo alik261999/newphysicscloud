@@ -65,14 +65,18 @@ function submitt(){
   var ele;
   var total = 0;
   if (confirm('Are you sure to submit exam?')) {
+    var sum = 4*ansarray.length;
+    alert(sum);
     for(var i=0;i<=ansarray.length;i++){
       ele = document.getElementsByName("exampleRadios"+(i+1));
+      
       for(var j = 0; j < ele.length; j++) {
         if(ele[j].checked==true && (j+1)==ansarray[i])
           total+=4;
       }
     }
     window.sessionStorage.setItem("points", total);
+    window.sessionStorage.setItem("total", sum);
     window.location.replace("end.html");
   }
   

@@ -27,10 +27,12 @@
 
   function result(){
     var total=0;
+    var outof = 4*arr.length;
     for(let i=0;i<arr.length;i++){
       total+=arr[i];
     }
     window.sessionStorage.setItem("points", total);
+    window.sessionStorage.setItem("total", outof);
   }
   
   function next() {
@@ -192,7 +194,7 @@
             `;
           }
       }
-      console.log(str);
+      //console.log(str);
       ind.innerHTML=str;
       document.getElementById("indices").innerHTML=str;
       document.getElementById("brand").innerHTML="Welcome! "+window.sessionStorage.getItem("name");

@@ -1,7 +1,9 @@
 let points=window.sessionStorage.getItem("points");
 let namee=window.sessionStorage.getItem("name");
 let mail=window.sessionStorage.getItem("mail");
-console.log(points);
+let cls=window.sessionStorage.getItem("class");
+let tot=window.sessionStorage.getItem("total");
+//console.log(points);
 
   
 function marks(){
@@ -29,17 +31,20 @@ function back(){
 function fire(){
     //console.log(points);
     var date = new Date();
-    var day = date.getDate().toString();
-    var mon = date.getMonth().toString();
+    var day = date.getDate();
+    var mon = date.getMonth();
     var yr = date.getFullYear().toString();
+    if (mon < 10) mon = "0" + mon;
+    if (day < 10) day = "0" + day;
     var arrname = namee.split(" ");
-    var nm = arrname.join("");
+    var nm = arrname.join("_").toLowerCase();
     if(points!=null)
     {
-        db.ref(yr+mon+day+"/"+nm).set({
+        db.ref("ExamResult/"+yr+mon.toString()+day.toString()+"/"+cls+"/"+nm).set({
             Name: namee,
             email_ID: mail,
-            Marks: points
+            Marks: points,
+            Total: tot
           });
     }
     else{
