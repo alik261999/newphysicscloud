@@ -31,11 +31,18 @@
           margin-bottom: 1%;
           border-radius: 5px;
         }
+        #inp{
+          width: 40%;
+          text-align: center;
+        }
+        #inp button{
+          width: 100%;
+        }
         #grid{
           display: grid;
           margin-top: 2%;
           grid-template-columns: 0.9fr 1.5fr 1fr;
-          grid-template-rows: 0.6fr 0.2fr 1fr;
+          grid-template-rows: 0.6fr 0.3fr 1fr;
           grid-template-areas: "bio sp1 nt"
                                 "tm sp1 nt"
                                 "tm sp2 nt";
@@ -44,6 +51,7 @@
         #sp1{
           grid-area: sp1;
           border-radius: 5px;
+          height: fit-content;
         }
         #sp2{
           grid-area: sp2;
@@ -205,7 +213,12 @@
               <canvas id="myChart1" height="120"></canvas>
             </div>
             <div id="sp2" class="bg-body shadow text-secondary">
-              
+              <div id="inp">
+                <h6>Set To-do</h6>
+                <input type="date" class="form-control mb-1" id="inp1" placeholder="Select date">
+                <input type="text" class="form-control mb-1" id="inp2" placeholder="Set your Program">
+                <button type="button" class="btn btn-outline-secondary btn-sm">Save</button>
+              </div>
             </div>
           </div>
       </div>
